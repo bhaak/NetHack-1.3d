@@ -4,6 +4,9 @@
 
 #include <signal.h>
 #include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include "hack.h"
 extern char genocided[60];		/* defined in Decl.c */
 extern char fut_geno[60];		/* idem */
@@ -52,7 +55,11 @@ dosave0(hu) int hu; {
 		return 0;
 	fd = open(SAVEF, O_WRONLY | O_BINARY | O_CREAT, FMASK);
 #else
+#ifdef GNU
+	fd = open(SAVEF, O_WRONLY | O_CREAT, FMASK);
+#else
 	fd = creat(SAVEF, FMASK);
+#endif /* GNU */
 #endif
 	if(fd < 0) {
 		if(!hu) pline("Cannot open save file. (Continue or Quit)");

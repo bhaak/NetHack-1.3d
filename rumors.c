@@ -51,7 +51,11 @@ outrumor()
 
 #define	CHARSZ	8			/* number of bits in a char */
 extern long *alloc();
+
+#ifndef GNU
 extern char *index();
+#endif	/* GNU */
+
 int n_rumors = 0;
 int n_used_rumors = -1;
 char *usedbits;

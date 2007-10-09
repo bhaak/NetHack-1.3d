@@ -5,8 +5,10 @@
 #include "config.h"
 
 #ifndef MSDOS
+#ifndef GNU
 extern char *sprintf();
-#endif
+#endif	/* GNU */
+#endif	/* MSDOS */
 
 extern long *alloc();
 

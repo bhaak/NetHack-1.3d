@@ -6,6 +6,8 @@
 
 #include "hack.h"
 
+static drop();
+
 extern struct obj *splitobj(), *addinv();
 extern boolean hmon();
 extern boolean level_exists[];

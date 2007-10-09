@@ -18,7 +18,7 @@ static	char	SCCS_Id[] = "@(#)makedefs.c	1.3\t87/07/14";
 #define	RUMOR_FILE	"rumors"
 #define	DATA_FILE	"data"
 
-char	inline[256], outline[256];
+char	in_line[256], out_line[256];
 
 main(argc, argv)
 	int	argc;
@@ -71,10 +71,10 @@ FILE	*freopen();
 		exit(1);
 	}
 
-	while(gets(inline) != NULL) {
+	while(gets(in_line) != NULL) {
 
-	    puts(inline);
-	    if(!strncmp(inline, "/* DO NOT REMOVE THIS LINE */", 29)) break;
+	    puts(in_line);
+	    if(!strncmp(in_line, "/* DO NOT REMOVE THIS LINE */", 29)) break;
 	}
 	ntrap = 10;
 	printf("\n");
@@ -125,20 +125,20 @@ FILE	*freopen();
 		exit(1);
 	}
 
-	while(gets(inline) != NULL)	puts(inline);
+	while(gets(in_line) != NULL)	puts(in_line);
 
 #ifdef KAA
 	sprintf(infile, "%s.kaa", RUMOR_FILE);
 	if(freopen(infile, "r+", stdin) == NULL)	perror(infile);
 
-	while(gets(inline) != NULL)	puts(inline);
+	while(gets(in_line) != NULL)	puts(in_line);
 #endif
 
 #ifdef NEWCLASS
 	sprintf(infile, "%s.mrx", RUMOR_FILE);
 	if(freopen(infile, "r+", stdin) == NULL)	perror(infile);
 
-	while(gets(inline) != NULL)	puts(inline);
+	while(gets(in_line) != NULL)	puts(in_line);
 #endif
 	fclose(stdin);
 	fclose(stdout);
@@ -162,10 +162,10 @@ FILE	*freopen();
 		exit(1);
 	}
 
-	while(gets(inline) != NULL) {
+	while(gets(in_line) != NULL) {
 
-	    if(!strncmp(inline, "char datestring[] = ", 20)) break;
-	    puts(inline);
+	    if(!strncmp(in_line, "char datestring[] = ", 20)) break;
+	    puts(in_line);
 	}
 	time(&clock);
 	strcpy(cbuf, ctime(&clock));
@@ -194,28 +194,28 @@ FILE	*freopen();
 		exit(1);
 	}
 
-	while(gets(inline) != NULL) {
+	while(gets(in_line) != NULL) {
 #ifdef KOPS
-	    if(!strcmp(inline, "K	a kobold"))
+	    if(!strcmp(in_line, "K	a kobold"))
 		printf("K\ta Keystone Kop\n");
 	    else
 #endif
 #ifdef KAA
-	    if(!strcmp(inline, "Q	a quasit"))
+	    if(!strcmp(in_line, "Q	a quasit"))
 		printf("Q\ta quantum mechanic\n");
 	    else
 #endif
 #ifdef ROCKMOLE
-	    if(!strcmp(inline, "r	a giant rat"))
+	    if(!strcmp(in_line, "r	a giant rat"))
 		printf("K\ta rockmole\n");
 	    else
 #endif
 #ifdef SPIDERS
-	    if(!strcmp(inline, "s	a scorpion"))
+	    if(!strcmp(in_line, "s	a scorpion"))
 		printf("s\ta giant spider\n");
 	    else
 #endif
-		puts(inline);
+		puts(in_line);
 	}
 #ifdef KAA
 	printf("9\ta giant\n");

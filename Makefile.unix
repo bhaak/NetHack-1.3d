@@ -8,17 +8,19 @@ TTY  = unixtty.c
 UNIX = unixunix.c
 
 # on some systems the termcap library is in -ltermcap
-TERMLIB = -ltermlib
+#TERMLIB = -ltermlib
+TERMLIB = -lncurses
 
 # make NetHack
 GAME = nethack
 GAMEUID = games
 GAMEGRP = bin
+PREFIX = /tmp/oldhack
 #	GAMEDIR also appears in config.h as "HACKDIR".
-GAMEDIR = /usr/games/lib/$(GAME)dir
-SHELLDIR = /usr/games
-MANDIR  = /usr/man/man6
-CFLAGS = -O
+GAMEDIR = $(PREFIX)/games/lib/$(GAME)dir
+SHELLDIR = $(PREFIX)/games
+MANDIR  = $(PREFIX)/man/man6
+CFLAGS = -g
 LFLAGS = -X
 
 HACKCSRC = alloc.c apply.c bones.c cmd.c decl.c do.c do_name.c do_wear.c\
@@ -57,7 +59,8 @@ HOBJ = alloc.o apply.o bones.o cmd.o decl.o do.o do_name.o do_wear.o\
 
 $(GAME):	specifics $(HOBJ) Makefile
 	@echo "Loading ..."
-	@ld $(LFLAGS) -o $(GAME) /lib/crt0.o $(HOBJ) $(TERMLIB) -lc
+#	@ld $(LFLAGS) -o $(GAME) /lib/crt0.o $(HOBJ) $(TERMLIB) -lc
+	@cc -o $(GAME) $(HOBJ) $(TERMLIB)
 
 all:	$(GAME) lint
 	@echo "Done."
@@ -68,19 +71,19 @@ makedefs:	makedefs.c alloc.o config.h
 RUMORFILES= rumors.base rumors.kaa rumors.mrx
 
 rumors:	config.h $(RUMORFILES) makedefs
-	makedefs -r
+	./makedefs -r
 
 data:	config.h data.base makedefs
-	makedefs -d
+	./makedefs -d
 
 date.h:	$(SOURCES) makedefs
-	makedefs -D
+	./makedefs -D
 
 trap.h:	config.h makedefs
-	makedefs -t
+	./makedefs -t
 
 onames.h:	makedefs objects.h
-	makedefs -o
+	./makedefs -o
 
 specifics:	main.o tty.o unix.o
 
@@ -135,11 +138,13 @@ install: $(VARAUX)
 	-rm -f $(GAMEDIR)/$(GAME)
 	-rm -f $(GAMEDIR)/bones*
 	-rm -f $(GAMEDIR)/save/*
+	mkdir -p $(GAMEDIR)/save
 	cp help hh rumors data $(GAMEDIR)
 	cp $(GAME).sh $(SHELLDIR)/$(GAME)
 	cp $(GAME) $(GAMEDIR)/$(GAME)
-	chown $(GAMEUID) $(SHELLDIR)/$(GAME) $(GAMEDIR)/*
-	chgrp $(GAMEGRP) $(SHELLDIR)/$(GAME) $(GAMEDIR)/*
+	touch $(GAMEDIR)/perm
+	chown $(GAMEUID) $(SHELLDIR)/$(GAME) $(GAMEDIR) $(GAMEDIR)/*
+	chgrp $(GAMEGRP) $(SHELLDIR)/$(GAME) $(GAMEDIR) $(GAMEDIR)/*
 	chmod 0755 $(SHELLDIR)/$(GAME)
 	chmod 04755 $(GAMEDIR)/$(GAME)
 	-cp nethack.6 $(MANDIR)

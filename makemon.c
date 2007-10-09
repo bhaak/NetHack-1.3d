@@ -4,7 +4,9 @@
 
 #include	"hack.h"
 extern char fut_geno[];
+#ifndef GNU
 extern char *index();
+#endif	/* GNU */
 extern struct obj *mkobj_at(), *mksobj(), *mkobj();
 struct monst zeromonst;
 extern boolean in_mklev;

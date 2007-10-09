@@ -7,6 +7,7 @@
 extern struct monst *makemon();
 extern struct permonst pm_eel;
 extern struct obj *mkobj_at();
+extern struct obj *some_armor();
 char *hcolor();
 boolean	known; 
 int identify();

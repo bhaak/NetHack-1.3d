@@ -4,6 +4,9 @@
 
 #include <stdio.h>
 #include "hack.h"
+
+static marmoroff();
+
 extern char *nomovemsg;
 extern char quitchars[];
 extern char *Doname();

@@ -6,6 +6,10 @@
 #include	"edog.h"
 #include	"mkroom.h"
 static struct monst *bchit();
+
+static use_stethoscope();
+static use_leash();
+
 extern struct obj *addinv();
 extern struct trap *maketrap();
 extern int (*occupation)();

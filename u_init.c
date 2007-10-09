@@ -15,7 +15,7 @@ extern char plname[];
 
 struct you zerou;
 char pl_character[PL_CSIZ];
-char *(roles[]) = {	/* must all have distinct first letter */
+char *roles[] = {	/* must all have distinct first letter */
 			/* roles[4] & [7] may be changed for females */
 	"Archeologist", "Tourist", "Fighter", "Knight", "Cave-man",
 #ifdef NEWCLASS
@@ -242,9 +242,10 @@ beginner:
 		(void) putchar('\n');
 		(void) fflush(stdout);
 	}
-	if(exper) {
-		roles[i][0] = pc;
-	}
+/* I don't understand what this is supposed to do -- but it segfaults  -- sw */
+/* 	if(exper) { */
+/* 		roles[i][0] = pc; */
+/* 	} */
 
 got_suffix:
 

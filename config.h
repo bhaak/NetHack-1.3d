@@ -22,13 +22,14 @@
  */
 /* #define MSDOS 	/* define for MS-DOS (actually defined by compiler) */
 #define	UNIX		/* delete if no fork(), exec() available */
-#define BSD		/* defind for 4.n BSD  */
+/* #define BSD		/* defind for 4.n BSD  */
 /* #define SYSV		/* define for System V */
+#define GNU		/* define for GNU/Linux */
 
 /* #define BETA		/* if a beta-test copy  [MRS] */
 #define VERSION	"1.3d"	/* version number. */
 
-#define PYRAMID_BUG 	/* avoid a bug on the Pyramid */
+/* #define PYRAMID_BUG 	/* avoid a bug on the Pyramid */
 /* #define APOLLO		/* same for the Apollo */
 /* #define STUPID		/* avoid some complicated expressions if
 			   your C compiler chokes on them */
@@ -75,6 +76,10 @@
 #ifdef BSD
 #define	SUSPEND		/* let ^Z suspend the game */
 #endif
+#ifdef GNU
+#include <stdlib.h>
+#include <unistd.h>
+#endif
 #endif /* UNIX /**/
 
 #ifdef CHDIR
@@ -82,7 +87,7 @@
  * If you define HACKDIR, then this will be the default playground;
  * otherwise it will be the current directory.
  */
-#define HACKDIR	"/usr/games/lib/nethackdir"
+#define HACKDIR	"/tmp/oldhack/games/lib/nethackdir"
 
 /*
  * Some system administrators are stupid enough to make Hack suid root

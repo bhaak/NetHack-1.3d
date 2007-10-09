@@ -5,7 +5,10 @@
 #include	"config.h"		/* for typedefs */
 #include	"objects.h"
 #include	"onames.h"		/* for LAST_GEM */
+
+#ifndef GNU
 extern char *index();
+#endif	/* GNU */
 
 int
 letindex(let) register char let; {
@@ -202,17 +205,17 @@ register int i;
 init_corpses() {
 
 #ifdef KOPS
-	strcpy(objects[DEAD_KOP].oc_name, "dead Kop");
+	objects[DEAD_KOP].oc_name = "dead Kop";
 #endif
 #ifdef SPIDERS
-	strcpy(objects[DEAD_GIANT_SPIDER].oc_name, "dead giant spider");
+	objects[DEAD_GIANT_SPIDER].oc_name = "dead giant spider";
 #endif
 #ifdef ROCKMOLE
-	strcpy(objects[DEAD_ROCKMOLE].oc_name, "dead rockmole");
+	objects[DEAD_ROCKMOLE].oc_name = "dead rockmole";
 #endif
 #ifndef KAA
-	strcpy(objects[DEAD_QUASIT].oc_name, "dead quasit");
-	strcpy(objects[DEAD_VIOLET_FUNGI].oc_name, "dead violet fungi");
+	objects[DEAD_QUASIT].oc_name = "dead quasit";
+	objects[DEAD_VIOLET_FUNGI].oc_name = "dead violet fungi";
 #endif
 	return(0);
 }
