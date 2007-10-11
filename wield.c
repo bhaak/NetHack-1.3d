@@ -126,7 +126,7 @@ register char *time;
 
 int
 welded(obj) register struct obj *obj;  {
-	return(obj == uwep && obj->cursed &&
+        return(obj != Null(obj) && obj == uwep && obj->cursed &&
 	       (obj->olet == WEAPON_SYM || obj->otyp == HEAVY_IRON_BALL ||
 		obj->otyp == CAN_OPENER || obj->otyp == PICK_AXE));
 }
