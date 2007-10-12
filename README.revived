@@ -1,0 +1,63 @@
+----------------------------------------------------------------------
+				REAMDE
+		       Nethack 1.3d -- Revived
+----------------------------------------------------------------------
+
+It's the year 2007, 20 years after the first version of Nethack
+(v1.3d) was released into the wild.
+
+Many of nowadays Nethack players never had the opportunity to play
+this ancient version of Nethack, others may have and want to make a
+little nostalgic trip back, to the days when the net was still
+innocent and leprechaun were big `L'...
+
+Unfortunately the original sources of Nethack 1.3d don't build out of
+the box on modern systems.  So I hacked them a bit up, just enough to
+build and run on a GNU/Linux box of today.
+
+So here it is: Nethack 1.3d revived!
+
+
+BUILD INSTRUCTIONS:
+
+Edit the variable PREFIX in the Makefile and HACKDIR in config.h to
+the path where you want to install Nethack 1.3d.  Be careful not to
+override your installation of the current Nethack version!
+
+Then simply run `make' and wait...  A bunch of warnings is normal.
+
+To install the new old Nethack run `make install' as root user.
+
+Now you can run Nethack 1.3d as PREFIX/games/lib/nethackdir/nethack
+(The default PREFIX for the revived edition is /tmp/oldhack, so if you
+didn't change anything /tmp/oldhack/games/lib/nethackdir/nethack will
+do).
+
+
+KNOWN PROBLEMS:
+
+- After suspend (^Z) the game becomes unplayable.
+  Solution: don't do that!  Save the game instead.
+
+- The high score as shown by `nethack -s all' looks scrambled and
+  pretty much nonsensical.
+  Solution: send a fix! ;-)
+
+Besides this the game seems quite playable.
+
+All segfaults I stumbled across were fixed, but I did not much testing
+yet, so t is quite likely that there are still more.  Bug reports and
+patches are welcome.
+
+
+SCM REPOSITORY:
+
+The mercurial repository with the sources and all current changes can
+be found at
+http://hg.intevation.de/nethack/history/nethack-1.3d-revived
+
+
+Have fun!
+
+Sascha Wilde
+2007/10/13
