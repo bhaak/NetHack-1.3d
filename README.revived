@@ -38,15 +38,18 @@ KNOWN PROBLEMS:
 - After suspend (^Z) the game becomes unplayable.
   Solution: don't do that!  Save the game instead.
 
-- The high score as shown by `nethack -s all' looks scrambled and
-  pretty much nonsensical.
-  Solution: send a fix! ;-)
-
 Besides this the game seems quite playable.
 
-All segfaults I stumbled across were fixed, but I did not much testing
-yet, so t is quite likely that there are still more.  Bug reports and
-patches are welcome.
+
+UNKNOWN PROBLEMS:
+
+- Nethack 1.3d is not y2k safe, I added a somewhat naive fix, which
+  prevents the two digit year representation from overflowing but
+  might trigger further subtle problems.
+
+- All segfaults I stumbled across were fixed, but I did not much
+  testing yet, so t is quite likely that there are still more.  Bug
+  reports and patches are welcome.
 
 
 SCM REPOSITORY:
