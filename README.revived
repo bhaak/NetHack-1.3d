@@ -28,10 +28,9 @@ Then simply run `make' and wait...  A bunch of warnings is normal.
 
 To install the new old Nethack run `make install' as root user.
 
-Now you can run Nethack 1.3d as PREFIX/games/lib/nethackdir/nethack
-(The default PREFIX for the revived edition is /tmp/oldhack, so if you
-didn't change anything /tmp/oldhack/games/lib/nethackdir/nethack will
-do).
+Now you can run Nethack 1.3d as PREFIX/games/nethack (The default
+PREFIX for the revived edition is /tmp/oldhack, so if you didn't
+change anything /tmp/oldhack/games/nethack will do).
 
 
 KNOWN PROBLEMS:
