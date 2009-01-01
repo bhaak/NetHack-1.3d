@@ -46,6 +46,9 @@ char *argv[];
 #ifdef CHDIR
 	register char *dir;
 #endif
+#ifdef WIZARD
+	char *userid;
+#endif
 
 	hname = argv[0];
 	hackpid = getpid();
@@ -126,7 +129,11 @@ char *argv[];
 		switch(argv[0][1]){
 #ifdef WIZARD
 		case 'D':
-			if(!strcmp(getlogin(), WIZARD))
+			if(!(userid = getlogin()))
+				if(!(userid = getenv("USER")))
+					userid = getenv("LOGNAME");
+
+			if(userid && !strcmp(userid, WIZARD))
 				wizard = TRUE;
 			else
 				printf("Sorry.\n");
