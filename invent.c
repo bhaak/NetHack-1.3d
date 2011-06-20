@@ -366,17 +366,18 @@ register char *let,*word;
 		return(0);
 	}
 	for(;;) {
-		if(!buf[0])
+		if(!buf[0]) {
 #ifdef REDO
 		    if(!in_doagain)
 #endif
 			pline("What do you want to %s [*]? ", word);
-		else
+		} else {
 #ifdef REDO
 		    if(!in_doagain)
 #endif
 			pline("What do you want to %s [%s or ?*]? ",
 				word, buf);
+		}
 
 		cnt = 0;
 		ilet = readchar();
