@@ -474,7 +474,7 @@ register struct monst *mtmp;
 
 	    pline("%s demands %d Zorkmids for safe passage.",
 		  Xmonnam(mtmp), demand);
-	    pline("how many will you offer him?");
+	    pline("How many will you offer him? ");
 	    getlin(buf);
 	    sscanf(buf, "%d", &offer);
 

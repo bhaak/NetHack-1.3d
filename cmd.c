@@ -422,7 +422,7 @@ boolean s;
 #ifdef REDO
 	if (!in_doagain)
 #endif
-	    if(s) pline("In what direction?");
+	    if(s) pline("In what direction? ");
 	dirsym = readchar();
 #ifdef REDO
 	savech(dirsym);

@@ -519,7 +519,7 @@ tele() {
 	    else {
 #endif
 	
-		    pline("To what position do you want to be teleported?");
+		    pline("To what position do you want to be teleported? ");
 		    cc = getpos(1, "the desired position"); /* 1: force valid */
 		    /* possible extensions: introduce a small error if
 		       magic power is low; allow transfer to solid rock */
