@@ -5,7 +5,9 @@
 /* objects have letter " % ) ( 0 _ ` [ ! ? / = * + */
 #include "config.h"
 #include "objclass.h"
+#ifndef NULL
 #define	NULL	(char *)0
+#endif
 
 struct objclass objects[] = {
 

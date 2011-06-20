@@ -208,7 +208,7 @@ register struct obj *obj;
 			    && obj->otyp != CREAM_PIE
 # else
 			 if (!thitu(8, rnd(oclass->wldam), oclass->oc_name)
-# endif KOPS
+# endif /* KOPS */
 			    || obj->otyp == ENORMOUS_ROCK) {
 #else
 			 if (!thitu(8, rnd(oclass->wldam), oclass->oc_name)) {

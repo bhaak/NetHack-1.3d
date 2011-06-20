@@ -4,7 +4,9 @@
 
 #include "hack.h"
 #include "mfndpos.h"
+#ifndef NULL
 #define	NULL	(char *) 0
+#endif
 
 extern int warnlevel;	/* defined in mon.c */
 

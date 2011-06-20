@@ -2,6 +2,8 @@
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
 /* extern.h - version 1.0 */
 
+#include <stdio.h>
+
 #include "config.h"
 
 #ifndef MSDOS

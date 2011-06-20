@@ -232,9 +232,9 @@ die:
 				u.urexp += i;
 #ifndef DGKMOD
 				if(!done_stopprint)
-				  printf("\t%s (worth %d Zorkmids),\n",
+				  printf("\t%s (worth %ld Zorkmids),\n",
 #else
-				printf("        %s (worth %d Zorkmids),\n",
+				printf("        %s (worth %ld Zorkmids),\n",
 #endif
 				    doname(otmp), i);
 				if(otmp->spe >= 0) {
