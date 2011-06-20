@@ -272,6 +272,9 @@ got_suffix:
 	u.ublessed = 0;				/* not worthy yet */
 	u.ugangr   = 0;				/* gods not angry */
 #endif
+	u.uevent.uhand_of_elbereth = 0;
+
+	(void) time(&u.ubirthday);
 #ifdef KAA
 	u.mh = u.mhmax = u.umonnum = u.mtimedone = 0;
 #endif

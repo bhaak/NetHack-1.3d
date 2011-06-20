@@ -18,6 +18,13 @@ struct prop {
 	int (*p_tofn)();	/* called after timeout */
 };
 
+struct u_event {
+	Bitfield(gehennom_entered,1);	/* entered Gehennom via Valley */
+	Bitfield(uhand_of_elbereth,2);	/* became Hand of Elbereth */
+	Bitfield(udemigod,1);		/* killed the wiz */
+	Bitfield(ascended,1);		/* has offered the Amulet */
+};
+
 struct you {
 	xchar ux, uy;
 	schar dx, dy, dz;	/* direction of move (or zap or ... ) */
@@ -102,4 +109,8 @@ struct you {
 	int uinvault;
 	struct monst *ustuck;
 	int nr_killed[CMNUM+2];		/* used for experience bookkeeping */
+
+	struct u_event	uevent;		/* certain events have happened */
+	time_t	ubirthday;		/* real world time when game began */
+	time_t	udeathday;		/* real world time when game ended */
 };

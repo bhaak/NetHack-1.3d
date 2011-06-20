@@ -125,6 +125,10 @@ die:
 	(void) signal(SIGQUIT, done_intr);
 	(void) signal(SIGHUP, done_hangup);
 #endif
+
+	/* record time of death */
+	(void) time(&u.udeathday);
+
 	if(*st1 == 'q' && u.uhp < 1){
 		st1 = "died";
 		killer = "quit while already on Charon's boat";

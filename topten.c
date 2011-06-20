@@ -22,6 +22,7 @@ struct toptenentry {
 	struct toptenentry *tt_next;
 	long int points;
 	int level,maxlvl,hp,maxhp;
+	long deathdate, birthdate;
 	int uid;
 	char plchar;
 	char sex;
@@ -29,6 +30,126 @@ struct toptenentry {
 	char death[DTHSZ+1];
 	char date[10];		/* yyyymmdd */
 } *tt_head;
+
+#ifdef XLOGFILE
+static void munge_xlstring(char *dest, char *src, int n);
+static void write_xlentry(FILE *,struct toptenentry *);
+#endif
+
+#ifdef XLOGFILE
+#define SEP ":"
+#define SEPC ':'
+
+/* copy a maximum of n-1 characters from src to dest, changing ':' and '\n'
+ * to '_'; always null-terminate. */
+static void
+munge_xlstring(dest, src, n)
+char *dest;
+char *src;
+int n;
+{
+  int i;
+
+  for(i = 0; i < (n - 1) && src[i] != '\0'; i++) {
+    if(src[i] == SEPC || src[i] == '\n')
+      dest[i] = '_';
+    else
+      dest[i] = src[i];
+  }
+
+  dest[i] = '\0';
+
+  return;
+}
+
+static unsigned long
+encode_uevent()
+{
+  unsigned long c = 0UL;
+
+  /* game plot events */
+  if (u.uevent.gehennom_entered)    c |= 0x00020UL; /* entered Gehennom */
+  if (u.uevent.udemigod)            c |= 0x00040UL; /* provoked Rodney's wrath */
+  if (u.uevent.ascended)            c |= 0x00100UL; /* someone needs to use this variable */
+
+  /* notable other events */
+  if (u.uevent.uhand_of_elbereth)   c |= 0x00200UL; /* was crowned */
+
+  /* boss kills */
+#if 0 // TODO
+  if (mvitals[PM_WIZARD_OF_YENDOR].
+      died)                         c |= 0x04000UL; /* defeated Rodney */
+#endif
+
+  return c;
+}
+
+static void
+write_xlentry(rfile,tt)
+FILE *rfile;
+struct toptenentry *tt;
+{
+  char buf[DTHSZ+1];
+
+  /* Log all of the data found in the regular logfile */
+  (void)fprintf(rfile,
+                "version=%s-%s"
+                SEP "points=%ld"
+                SEP "deathlev=%d"
+                SEP "maxlvl=%d"
+                SEP "hp=%d"
+                SEP "maxhp=%d"
+                SEP "deathdate=%ld"
+                SEP "birthdate=%ld"
+                SEP "uid=%d",
+                GAME_SHORT_NAME,
+                VERSION,
+                tt->points, tt->level,
+                tt->maxlvl,
+                tt->hp, tt->maxhp,
+                tt->deathdate, tt->birthdate, tt->uid);
+
+  (void)fprintf(rfile,
+                SEP "gender=%s",
+                (tt->sex == 'F') ? "Fem" : "Mal");
+
+   munge_xlstring(buf, plname, DTHSZ + 1);
+  (void)fprintf(rfile, SEP "name=%s", buf);
+
+   munge_xlstring(buf, tt->death, DTHSZ + 1);
+  (void)fprintf(rfile, SEP "death=%s", buf);
+
+#if 0 // TODO
+  (void)fprintf(rfile, SEP "flags=0x%lx", encode_xlogflags());
+#endif
+
+#ifdef RECORD_CONDUCT
+ // TODO num_genocides?
+  (void)fprintf(rfile, SEP "conduct=0x%lx", encodeconduct());
+#endif
+
+  (void)fprintf(rfile, SEP "turns=%ld", moves);
+
+#ifdef RECORD_ACHIEVE
+ // entered gehennom
+ // TODO obtained the amulet
+ // TODO ascended
+  (void)fprintf(rfile, SEP "achieve=0x%lx", encodeachieve());
+#endif
+
+  (void)fprintf(rfile, SEP "event=%ld", encode_uevent());
+
+  (void)fprintf(rfile, SEP "starttime=%ld", (long)u.ubirthday);
+  (void)fprintf(rfile, SEP "endtime=%ld", (long)u.udeathday);
+
+  (void)fprintf(rfile, "\n");
+
+}
+
+#undef SEP
+#undef SEPC
+#endif /* XLOGFILE */
+
 
 topten(){
 	int uid = getuid();
@@ -41,6 +162,9 @@ topten(){
 #endif
 	int sleepct = 300;
 	FILE *rfile;
+#ifdef XLOGFILE
+	FILE *xlfile;
+#endif
 	register flg = 0;
 	extern char *getdate();
 #ifndef DGK
@@ -84,9 +208,24 @@ topten(){
 	(t0->death)[DTHSZ] = 0;
 	(void) strcpy(t0->date, getdate());
 
+	t0->birthdate = yyyymmdd(u.ubirthday);
+	t0->deathdate = yyyymmdd(u.udeathday);
+
 	/* assure minimum number of points */
 	if(t0->points < POINTSMIN)
 		t0->points = 0;
+
+#ifdef XLOGFILE
+	if(!(xlfile = fopen(XLOGFILE, "a"))) {
+		HUP puts("Cannot open extended log file!");
+		HUP (void) fflush(stdout);
+		goto unlock;
+	} else {
+		write_xlentry(xlfile, t0);
+		(void) fclose(xlfile);
+	}
+	HUP (void) putchar('\n');
+#endif /* XLOGFILE */
 
 	t1 = tt_head = newttentry();
 	tprev = 0;

@@ -59,6 +59,35 @@ getdate()
 	return(datestr);
 }
 
+long
+yyyymmdd(date)
+time_t date;
+{
+	long datenum;
+	struct tm *lt;
+
+	if (date == 0)
+		lt = getlt();
+	else
+#if (defined(ULTRIX) && !(defined(ULTRIX_PROTO) || defined(NHSTDC))) || (defined(BSD) && !defined(POSIX_TYPES))
+		lt = localtime((long *)(&date));
+#else
+		lt = localtime(&date);
+#endif
+
+	/* just in case somebody's localtime supplies (year % 100)
+	   rather than the expected (year - 1900) */
+	if (lt->tm_year < 70)
+	    datenum = (long)lt->tm_year + 2000L;
+	else
+	    datenum = (long)lt->tm_year + 1900L;
+	/* yyyy --> yyyymm */
+	datenum = datenum * 100L + (long)(lt->tm_mon + 1);
+	/* yyyymm --> yyyymmdd */
+	datenum = datenum * 100L + (long)lt->tm_mday;
+	return datenum;
+}
+
 phase_of_the_moon()			/* 0-7, with 0: new, 4: full */
 {					/* moon period: 29.5306 days */
 					/* year: 365.2422 days */

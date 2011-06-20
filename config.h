@@ -27,6 +27,7 @@
 #define GNU		/* define for GNU/Linux */
 
 /* #define BETA		/* if a beta-test copy  [MRS] */
+#define GAME_SHORT_NAME	"NH"
 #define VERSION	"1.3d"	/* version number. */
 
 /* #define PYRAMID_BUG 	/* avoid a bug on the Pyramid */
@@ -40,6 +41,7 @@
 
 #define WIZARD  "mike"	/* the person allowed to use the -D option */
 #define RECORD	"record"/* the file containing the list of topscorers */
+#define XLOGFILE "xlogfile" /* even larger logfile */
 #define	NEWS	"news"	/* the file containing the latest hack news */
 #define	HELP	"help"	/* the file containing a description of the commands */
 #define	SHELP	"hh"	/* abbreviated form of the same */

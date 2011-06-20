@@ -147,6 +147,7 @@ pleased() {
 			HFire_resistance |= INTRINSIC;
 			HCold_resistance |= INTRINSIC;
 			HPoison_resistance |= INTRINSIC;
+			u.uevent.uhand_of_elbereth = 1;
 			break;
 
 	    default:	impossible("Confused deity!");
