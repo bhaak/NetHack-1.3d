@@ -27,7 +27,7 @@ struct toptenentry {
 	char sex;
 	char name[NAMSZ+1];
 	char death[DTHSZ+1];
-	char date[7];		/* yymmdd */
+	char date[10];		/* yyyymmdd */
 } *tt_head;
 
 topten(){
@@ -92,7 +92,7 @@ topten(){
 	tprev = 0;
 	/* rank0: -1 undefined, 0 not_on_list, n n_th on list */
 	for(rank = 1; ; ) {
-	  if(fscanf(rfile, "%6s %d %d %d %d %d %ld %c%c %[^,],%[^\n]",
+	  if(fscanf(rfile, "%8s %d %d %d %d %d %ld %c%c %[^,],%[^\n]",
 		t1->date, &t1->uid,
 		&t1->level, &t1->maxlvl,
 		&t1->hp, &t1->maxhp, &t1->points,
@@ -158,7 +158,7 @@ topten(){
 	if(!done_stopprint) outheader();
 	t1 = tt_head;
 	for(rank = 1; t1->points != 0; rank++, t1 = t1->tt_next) {
-	  if(flg) fprintf(rfile,"%6s %d %d %d %d %d %ld %c%c %s,%s\n",
+	  if(flg) fprintf(rfile,"%8s %d %d %d %d %d %ld %c%c %s,%s\n",
 	    t1->date, t1->uid,
 	    t1->level, t1->maxlvl,
 	    t1->hp, t1->maxhp, t1->points,
@@ -246,7 +246,7 @@ char linebuf[BUFSZ];
 	    (killed || starv) ? "" : " dungeon", t1->level);
 	  if(t1->maxlvl != t1->level)
 	    Sprintf(eos(linebuf), " [max %d]", t1->maxlvl);
-	  if(quit && t1->death[4]) Sprintf("%s", eos(linebuf), t1->death + 4);
+	  if(quit && t1->death[4]) Sprintf(eos(linebuf), "%s", t1->death + 4);
 	}
 	if(killed) Sprintf(eos(linebuf), " by %s%s",
 	  (!strncmp(t1->death, "trick", 5) || !strncmp(t1->death, "the ", 4))
@@ -258,7 +258,7 @@ char linebuf[BUFSZ];
 	  register char *bp = eos(linebuf);
 	  char hpbuf[10];
 	  int hppos;
-	  Sprintf("%s", hpbuf, (t1->hp > 0) ? itoa(t1->hp) : "-");
+	  Sprintf(hpbuf, "%s", (t1->hp > 0) ? itoa(t1->hp) : "-");
 	  hppos = COLNO - 7 - strlen(hpbuf);
 	  if(bp <= linebuf + hppos) {
 	    while(bp < linebuf + hppos) *bp++ = ' ';
@@ -362,7 +362,7 @@ prscore(argc,argv) int argc; char **argv; {
 
 	t1 = tt_head = newttentry();
 	for(rank = 1; ; rank++) {
-	  if(fscanf(rfile, "%6s %d %d %d %d %d %ld %c%c %[^,],%[^\n]",
+	  if(fscanf(rfile, "%8s %d %d %d %d %d %ld %c%c %[^,],%[^\n]",
 		t1->date, &t1->uid,
 		&t1->level, &t1->maxlvl,
 		&t1->hp, &t1->maxhp, &t1->points,
