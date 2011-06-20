@@ -244,6 +244,7 @@ die:
 				if(otmp->spe >= 0) {
 					has_amulet = TRUE;
 					killer = "escaped (with amulet)";
+					u.uevent.ascended = TRUE;
 				}
 			}
 		}
