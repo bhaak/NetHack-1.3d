@@ -98,7 +98,7 @@ dosearch()
 
 				if(trap->ttyp == PIERC) {
 					deltrap(trap);
-					mtmp=makemon(PM_PIERCER,x,y);
+				    if((mtmp=makemon(PM_PIERCER,x,y)))
 					pline("You find %s.", defmonnam(mtmp));
 					return(1);
 				}

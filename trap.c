@@ -170,7 +170,7 @@ if(uarmh) pline("Fortunately, you are wearing a helmet!");
 					pline("Your shield is not affected!");
 					break;
 				}
-				if (uwep->otyp == TWO_HANDED_SWORD) goto two_hand;
+				if (uwep && uwep->otyp == TWO_HANDED_SWORD) goto two_hand;
 				/* Two goto statements in a row--aaarrrgggh! */
 		glovecheck: if(uarmg) pline("Your gloves are not affected!");
 				break;

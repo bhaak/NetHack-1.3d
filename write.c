@@ -17,9 +17,9 @@ register struct obj *scroll;
 	switch(scroll->otyp)  {
 # ifdef MAIL
 	case SCR_MAIL:
-# endif
 		return(0);
 		break;
+# endif
 	case SCR_LIGHT:
 	case SCR_GOLD_DETECTION:
 	case SCR_FOOD_DETECTION:

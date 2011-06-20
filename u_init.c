@@ -200,7 +200,11 @@ extern char readchar();
 
 	printf("%c\n", exper);		/* echo */
 
-	if (index("qQ", exper)) exit(0);
+	if (index("qQ", exper)) {
+		clearlocks();
+		settty((char *) 0);
+		exit(0);
+	}
 
 	if(index("Yy", exper)) {
 		exper = 0;
@@ -218,7 +222,12 @@ extern char readchar();
 	printf("? [%s or q(quit)] ", rolesyms);
 
 	while(pc = readchar()) {
-		if (pc == 'q' || pc == 'Q') exit(0);
+		if (pc == 'q' || pc == 'Q') {
+
+			clearlocks();
+			settty((char *) 0);
+			exit(0);
+		}
 		if('a' <= pc && pc <= 'z') pc += 'A'-'a';
 		if((i = role_index(pc)) >= 0) {
 			printf("%c\n", pc);	/* echo */

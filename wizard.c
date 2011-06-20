@@ -418,9 +418,10 @@ nasty() {
 
 	for(i = rnd(u.ulevel/3); i > 0; --i) {
 
-		mtmp = mkmon_at(nasties[rn2(nastynum)], u.ux, u.uy);
+		if((mtmp = mkmon_at(nasties[rn2(nastynum)], u.ux, u.uy)))  {
 		mtmp->msleep = 0;
 		mtmp->mpeaceful = 0;
+	}
 	}
 #else
 	(void) makemon((struct permonst *)0, u.ux, u.uy);

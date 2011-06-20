@@ -24,6 +24,7 @@ register struct permonst *pa = magr->data, *pd = mdef->data;
 int hit;
 schar tmp;
 boolean vis;
+	if(!magr || !mdef) return(0);		/* mike@genat */
 	if(index("Eauy", pa->mlet)) return(0);
 	if(magr->mfroz) return(0);		/* riv05!a3 */
 	tmp = pd->ac + pa->mlevel;
@@ -214,7 +215,7 @@ register thrown;
 	       if (u.usym == '&' && !rn2(5)) {
 		    struct monst *dtmp;
 		    pline("Some hell-p has arrived!");
-		    dtmp = mkmon_at('&',u.ux,u.uy);
+		    if((dtmp = mkmon_at('&',u.ux,u.uy)))
 		    (void)tamedog(dtmp,(struct obj *)0);
 	       }
 	       tmp = d(mons[u.umonnum].damn, mons[u.umonnum].damd);
