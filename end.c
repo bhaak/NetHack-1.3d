@@ -18,14 +18,14 @@ done1()
 	(void) signal(SIGINT,SIG_IGN);
 #if defined(WIZARD) && defined(UNIX) 
 	if(wizard) {
-	    pline("Dump core?");
+	    pline("Dump core? ");
 	    if(readchar() == 'y') {
 		(void) signal(SIGINT,done1);
 		abort();
 	    }
 	}
 #endif
-	pline("Really quit?");
+	pline("Really quit? ");
 	if(readchar() != 'y') {
 		(void) signal(SIGINT,done1);
 		clrlin();

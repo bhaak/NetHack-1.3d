@@ -427,14 +427,14 @@ register struct monst *mtmp;
 	    && mdat->mlet == 'd' && mtmp->mtame) {
 		mtmp->mflee = 1;			
 		mtmp->mfleetim = rnd(6);
-		pline("You stop to avoid hitting your dog");
+		pline("You stop to avoid hitting your dog.");
 		return(TRUE);
 	}
 	if (flags.confirm && (mtmp->mpeaceful || mtmp->mtame) && ! Confusion
 	    && !Hallucination && !Invisible)
 
 		if (Blind ? Telepat : (!mtmp->minvis || See_invisible)) {
-			pline("Really attack?");
+			pline("Really attack? ");
 			(void) fflush(stdout);
 			if (readchar() != 'y') {
 				flags.move = 0;
