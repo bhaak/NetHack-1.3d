@@ -674,7 +674,7 @@ nextclass:
 		if(!lets || !*lets || index(lets, ilet)) {
 			if (!flags.sortpack || otmp->olet == *invlet) {
 				if (flags.sortpack && !classcount) {
-					cornline(1, let_to_name(*invlet));
+					cornline(1, let_to_name(*invlet, TRUE));
 					classcount++;
 				}
 				cornline(1, xprname(otmp, ilet));
@@ -730,7 +730,7 @@ nextclass:
 		if(!lets || !*lets || index(lets, ilet)) {
 			if (!flags.sortpack || otmp->olet == *invlet) {
 				if (flags.sortpack && !classcount) {
-					dump_subtitle(let_to_name(*invlet));
+					dump_subtitle(let_to_name(*invlet, FALSE));
 					classcount++;
 				}
 				dump("    ", xprname(otmp, ilet));
@@ -1063,8 +1063,9 @@ static char *names[] = {"Illegal objects", "Amulets", "Comestibles", "Weapons",
 #endif
 			"Rings", "Gems"};
 char *
-let_to_name(let)
+let_to_name(let, do_inverse)
 char let;
+int do_inverse;
 {
 	char *pos = index(obj_symbols, let);
 	extern char *HI, *HE;
@@ -1072,7 +1073,9 @@ char let;
 	static char buf[4 + 4 + 15 + 1];
 
 	if (pos == NULL) pos = obj_symbols;
-	Sprintf(buf, "%s%s%s", HI, names[pos - obj_symbols], HE);
+	Sprintf(buf, "%s%s%s", do_inverse ? HI : "",
+			names[pos - obj_symbols],
+			do_inverse ? HE : "");
 	return (buf);
 }
 #endif /* SORTING /**/

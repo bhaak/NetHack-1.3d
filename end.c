@@ -237,8 +237,11 @@ die:
 	}
 	if(*st1 == 'c') killer = st1;		/* after outrip() */
 	settty((char *) 0);	/* does a clear_screen() */
+	dump("", pbuf);
+	sprintf(pbuf, "Goodbye %s %s...\n", pl_character, plname);
 	if(!done_stopprint)
-		printf("Goodbye %s %s...\n\n", pl_character, plname);
+		printf("%s\n", pbuf);
+	dump("", pbuf);
 	{ long int tmp;
 	  tmp = u.ugold - u.ugold0;
 	  if(tmp < 0)
@@ -266,21 +269,28 @@ die:
 		keepdogs();
 		mtmp = mydogs;
 		if(mtmp) {
-			if(!done_stopprint) printf("You");
+			sprintf(pbuf, "You");
 			while(mtmp) {
-				if(!done_stopprint)
-					printf(" and %s", monnam(mtmp));
+				sprintf(eos(pbuf), " and %s", monnam(mtmp));
 				if(mtmp->mtame)
 					u.urexp += mtmp->mhp;
 				mtmp = mtmp->nmon;
 			}
 			if(!done_stopprint)
-		    printf("\nescaped from the dungeon with %ld points,\n",
-			u.urexp);
-		} else
-		if(!done_stopprint)
-		  printf("You escaped from the dungeon with %ld points,\n",
-		    u.urexp);
+				printf("%s\n", pbuf);
+			dump("", pbuf);
+			sprintf(pbuf, "escaped from the dungeon with %ld points,",
+					u.urexp);
+			if(!done_stopprint)
+					printf("%s\n", pbuf);
+			dump("", pbuf);
+		} else {
+			sprintf(pbuf, "You escaped from the dungeon with %ld points,",
+					u.urexp);
+			if(!done_stopprint)
+				printf("%s\n", pbuf);
+			dump("", pbuf);
+		}
 		for(otmp = invent; otmp; otmp = otmp->nobj) {
 			if(otmp->olet == GEM_SYM){
 				objects[otmp->otyp].oc_name_known = 1;
@@ -296,23 +306,25 @@ die:
 				}
 				u.urexp += i;
 #ifndef DGKMOD
-				if(!done_stopprint)
-				  printf("\t%s (worth %d Zorkmids),\n",
+				sprintf(pbuf, "\t%s (worth %d Zorkmids),", doname(otmp), i);
 #else
-				printf("        %s (worth %ld Zorkmids),\n",
+				sprintf(pbuf, "        %s (worth %ld Zorkmids),", doname(otmp), i);
 #endif
-				    doname(otmp), i);
+				if(!done_stopprint)
+					printf("%s\n", pbuf);
+				dump("", pbuf);
 			} else if(otmp->olet == AMULET_SYM) {
 				otmp->known = 1;
 				i = (otmp->spe < 0) ? 2 : 5000;
 				u.urexp += i;
 #ifndef DGKMOD
-				if(!done_stopprint)
-				  printf("\t%s (worth %ld Zorkmids),\n",
+				sprintf(pbuf, "\t%s (worth %ld Zorkmids),", doname(otmp), i);
 #else
-				printf("        %s (worth %ld Zorkmids),\n",
+				sprintf(pbuf, "        %s (worth %ld Zorkmids),", doname(otmp), i);
 #endif
-				    doname(otmp), i);
+				if(!done_stopprint)
+					printf("%s\n", pbuf);
+				dump("", pbuf);
 				if(otmp->spe >= 0) {
 					has_amulet = TRUE;
 					killer = "escaped (with amulet)";
@@ -322,23 +334,33 @@ die:
 		}
 		if(worthlessct)
 #ifndef DGKMOD
-		  if(!done_stopprint)
-		    printf("\t%u worthless piece%s of coloured glass,\n",
-#else
-		  printf("        %u worthless piece%s of coloured glass,\n",
-#endif
+		sprintf(pbuf, "\t%u worthless piece%s of coloured glass,",
 			worthlessct, plur(worthlessct));
-		if(has_amulet) u.urexp *= 2;
-	} else
+#else
+		sprintf(pbuf, "        %u worthless piece%s of coloured glass,",
+			worthlessct, plur(worthlessct));
+#endif
 		if(!done_stopprint)
-		  printf("You %s on dungeon level %d with %ld points,\n",
+			printf("%s\n", pbuf);
+		dump("", pbuf);
+		if(has_amulet) u.urexp *= 2;
+	} else {
+		sprintf(pbuf, "You %s on dungeon level %d with %ld points,",
 		    st1, dlevel, u.urexp);
+		if(!done_stopprint)
+			printf("%s\n", pbuf);
+		dump("", pbuf);
+		sprintf(pbuf, "and %ld piece%s of gold, after %ld move%s.",
+				u.ugold, plur(u.ugold), moves, plur(moves));
+		if(!done_stopprint)
+			printf("%s\n", pbuf);
+		dump("", pbuf);
+	}
+	sprintf(pbuf, "You were level %u with a maximum of %d hit points when you %s.",
+			u.ulevel, u.uhpmax, st1);
 	if(!done_stopprint)
-	  printf("and %ld piece%s of gold, after %ld move%s.\n",
-	    u.ugold, plur(u.ugold), moves, plur(moves));
-	if(!done_stopprint)
-  printf("You were level %u with a maximum of %d hit points when you %s.\n",
-	    u.ulevel, u.uhpmax, st1);
+		printf("%s\n", pbuf);
+	dump("", pbuf);
 	if(*st1 == 'e' && !done_stopprint){
 		getret();	/* all those pieces of coloured glass ... */
 		cls();
@@ -348,6 +370,7 @@ die:
 #endif
 		topten();
 	if(done_stopprint) printf("\n\n");
+	dump("", "");
 #ifdef APOLLO
 	getret();
 #endif

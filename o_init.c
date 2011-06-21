@@ -185,7 +185,7 @@ dodiscovered()				/* free after Robert Viduya */
 #ifdef DGKMOD
 	    if (objects[i].oc_olet != class) {
 		class = objects[i].oc_olet;
-		cornline(1, let_to_name(class));
+		cornline(1, let_to_name(class, TRUE));
 	    }
 #endif
 	    cornline(1, typename(i));
