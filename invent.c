@@ -699,6 +699,62 @@ nextclass:
 	cornline(2, any);
 }
 
+dump_inventory()
+{
+	char *lets = NULL;
+	register struct obj *otmp;
+	register char ilet;
+	int ct = 0;
+	char any[BUFSZ];
+#ifdef SORTING
+	char *invlet = inv_order;
+	int classcount = 0;
+#endif /* SORTING */
+
+	morc = 0;		/* just to be sure */
+
+	dump_title("Your inventory");
+
+	if(!invent){
+		dump("  ", "Not carrying anything");
+		return;
+	}
+
+	cornline(0, (char *) 0);
+#ifdef SORTING
+nextclass:
+	classcount = 0;
+	ilet = 'a';
+	for(otmp = invent; otmp; otmp = otmp->nobj) {
+		if(flags.invlet_constant) ilet = otmp->invlet;
+		if(!lets || !*lets || index(lets, ilet)) {
+			if (!flags.sortpack || otmp->olet == *invlet) {
+				if (flags.sortpack && !classcount) {
+					dump_subtitle(let_to_name(*invlet));
+					classcount++;
+				}
+				dump("    ", xprname(otmp, ilet));
+				any[ct++] = ilet;
+			}
+		}
+		if(!flags.invlet_constant) if(++ilet > 'z') ilet = 'A';
+	}
+	if (flags.sortpack && *++invlet) goto nextclass;
+#else
+	ilet = 'a';
+	for(otmp = invent; otmp; otmp = otmp->nobj) {
+	    if(flags.invlet_constant) ilet = otmp->invlet;
+	    if(!lets || !*lets || index(lets, ilet)) {
+		    dump("    ", xprname(otmp, ilet));
+		    any[ct++] = ilet;
+	    }
+	    if(!flags.invlet_constant) if(++ilet > 'z') ilet = 'A';
+	}
+#endif /* SORTING */
+	any[ct] = 0;
+	dump("", "");
+}
+
 dotypeinv ()				/* free after Robert Viduya */
 /* Changed to one type only, so he doesnt have to type cr */
 {

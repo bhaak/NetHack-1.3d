@@ -188,6 +188,7 @@ die:
 	  /* D: Add a line for clearance from the screen dump */
 	  dump("", "");
 	  dump_screen();
+	  dump_inventory();
 	}
 # ifdef DUMPMSGS // TODO
 	if (lastmsg >= 0) {
