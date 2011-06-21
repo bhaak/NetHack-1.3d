@@ -3,7 +3,13 @@
 /* NetHack may be freely redistributed.  See license for details. */
 
 #include "hack.h"
-#include "date.h"
+
+/* originally from end.c */
+#ifdef DUMP_LOG
+#ifdef DUMP_FN
+char dump_fn[] = DUMP_FN;
+#endif
+#endif /* DUMP_LOG */
 
 #ifdef DUMP_LOG
 
@@ -13,8 +19,12 @@
 # endif
 extern char msgs[][BUFSZ];
 extern int lastmsg;
-void FDECL(do_vanquished, (int, BOOLEAN_P));
-#endif 
+void do_vanquished(int, int);
+extern char plname[];
+
+char* html_escape_character(const char c);
+void dump_html(const char *format, const char *str);
+#endif
 
 #ifdef DUMP_LOG
 FILE *dump_fp = (FILE *)0;  /**< file pointer for text dumps */
@@ -189,7 +199,7 @@ const char *str;
 	if (dump_fp)
 		fprintf(dump_fp, "  %c - %s\n", c, str);
 	if (html_dump_fp) {
-		char *link = html_link(dump_typename(obj->otyp), str);
+		char *link = ""; /* html_link(dump_typename(obj->otyp), str); */
 #ifdef MENU_COLOR
 # ifdef TTY_GRAPHICS
 		int color;
@@ -267,7 +277,7 @@ struct obj *obj;
 		fprintf(dump_fp, "  %s\n", doname(obj));
 	if (html_dump_fp) {
 		const char* str = doname(obj);
-		char *link = html_link(dump_typename(obj->otyp), str);
+		char *link = ""; /* html_link(dump_typename(obj->otyp), str); */
 #ifdef MENU_COLOR
 # ifdef TTY_GRAPHICS
 		int color;
@@ -402,10 +412,10 @@ const char *title;
 	dump_html("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n","");
 	dump_html("<html xmlns=\"http://www.w3.org/1999/xhtml\">\n", "");
 	dump_html("<head>\n", "");
-	dump_html("<title>UnNetHack " VERSION_STRING ": %s</title>\n", title);
+	dump_html("<title>NetHack " VERSION ": %s</title>\n", title);
 	dump_html("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\" />\n", "");
-	dump_html("<meta name=\"generator\" content=\"UnNetHack " VERSION_STRING "\" />\n", "");
-	dump_html("<meta name=\"date\" content=\"%s\" />\n", iso8601(0));
+	dump_html("<meta name=\"generator\" content=\"NetHack " VERSION "\" />\n", "");
+	dump_html("<meta name=\"date\" content=\"%s\" />\n", (const char *)iso8601(0));
 #ifdef DUMP_HTML_CSS_FILE
 # ifndef DUMP_HTML_CSS_EMBEDDED
 	dump_html("<link rel=\"stylesheet\" type=\"text/css\" href=\"" DUMP_HTML_CSS_FILE "\" />\n", "");
@@ -438,29 +448,5 @@ char* html_escape_character(const char c) {
 			return html_escape_buf;
 	}
 }
-
-#ifdef DUMP_LOG
-/** Screenshot of the HTML map. */
-int
-dump_screenshot()
-{
-	char screenshot[BUFSZ];
-	char *filename = get_dump_filename();
-	Sprintf(screenshot, "%s_screenshot_%ld_t%ld.html", filename, u.ubirthday, moves);
-	if (filename) free(filename);
-
-	html_dump_fp = fopen(screenshot, "w");
-	if (!html_dump_fp) {
-		pline("Can't open %s for output.", screenshot);
-		pline("Screenshot file not created.");
-	}
-
-	dump_header_html("Screenshot");
-	dump_screen();
-	dump_exit();
-
-	return 0;
-}
-#endif
 
 /*dump.c*/

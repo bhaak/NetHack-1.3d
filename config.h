@@ -49,6 +49,11 @@
 #define	DATAFILE	"data"	/* a file giving the meaning of symbols used */
 #define	FMASK	0660	/* file creation mask */
 
+#define DUMP_LOG	/* Dumping character stats */
+#define DUMP_TEXT_LOG 	/* Dump a text file */
+#define DUMP_FN "/tmp/oldhack/%n.nh"	/* Fixed dumpfile name */
+
+
 #ifdef UNIX
 #define	HLOCK	"perm"	/* an empty file used for locking purposes */
 #define LLOCK	"safelock"	/* link to previous */

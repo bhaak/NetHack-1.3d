@@ -7,10 +7,45 @@
 #include "hack.h"
 #define	Sprintf	(void) sprintf
 extern char plname[], pl_character[];
+extern char dump_fn[];
+extern char oldbot[];
 
 xchar maxdlevel = 1;
 int done_stopprint;
 int done_hup;
+
+#ifdef DUMP_LOG
+/* Take a screen dump */
+static void
+dump_screen()
+{
+	register int x,y;
+	int lastc;
+	/* D: botl.c has a closer approximation to the size, but we'll go with
+	 *    this */
+	char buf[300], *ptr;
+
+	for (y = 0; y < ROWNO; y++) {
+		lastc = 0;
+		ptr = buf;
+		for (x = 1; x < COLNO; x++) {
+			struct rm *crm = &levl[x][y];
+			unsigned char c = crm->scrsym;
+
+			//*ptr++ = c;
+			buf[x-1] = (c != 0 && crm->seen) ? c : ' ';
+			if (c != ' ' && c != 0)
+				lastc = x;
+		}
+		buf[lastc] = '\0';
+		dump("", buf);
+	}
+	dump("", "");
+	dump("", oldbot);
+	dump("", "");
+	dump("", "");
+}
+#endif /* DUMP_LOG */
 
 
 done1()
@@ -97,6 +132,7 @@ char *str;
 done(st1)
 register char *st1;
 {
+	char kilbuf[BUFSZ], pbuf[BUFSZ];
 #ifdef DIAGS
 	char	c;
 #endif
@@ -141,6 +177,41 @@ die:
 	paybill();
 	clearlocks();
 	if(flags.toplin == 1) more();
+
+#ifdef DUMP_LOG
+	/* D: Grab screen dump right here */
+	if (dump_fn[0]) {
+	  dump_init();
+	  Sprintf(pbuf, "%s, %s", plname, pl_character);
+	  dump_header_html(pbuf);
+	  dump("", pbuf);
+	  /* D: Add a line for clearance from the screen dump */
+	  dump("", "");
+	  dump_screen();
+	}
+# ifdef DUMPMSGS // TODO
+	if (lastmsg >= 0) {
+		char tmpbuf[BUFSZ];
+		int i,j;
+		dump_title("Latest messages");
+		dump_blockquote_start();
+		for (j = lastmsg + 1; j < DUMPMSGS + lastmsg + 1; j++) {
+		  i = j % DUMPMSGS;
+		  if (msgs[i] && strcmp(msgs[i], "") ) {
+		    if (msgs_count[i] == 1) {
+		      dump_line("  ", msgs[i]);
+		    } else {
+		      Sprintf(tmpbuf, "%s (%dx)", msgs[i], msgs_count[i]);
+		      dump_line("  ", tmpbuf);
+		    }
+		  }
+		}
+		dump_blockquote_end();
+		dump("","");
+	}
+# endif /* DUMPMSGS */
+#endif /* DUMP_LOG */
+
 #ifdef DIAGS
 	pline("Do you want to have your possessions identified? [Yynq] ");
 	if ((c = readchar()) == 'y' || c == 'Y') {

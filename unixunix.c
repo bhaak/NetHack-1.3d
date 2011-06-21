@@ -115,6 +115,28 @@ midnight()
 	return(getlt()->tm_hour == 0);
 }
 
+static char buf_fmt_time[BUFSZ];
+/** Returns a date formatted by strftime.
+ * Returns current time if time is 0. */
+char *
+get_formatted_time(time, fmt)
+time_t time;
+const char *fmt;
+{
+	strftime(buf_fmt_time, BUFSZ, fmt,
+	         (time == 0) ? getlt() : localtime(&time));
+	return buf_fmt_time;
+}
+
+/** Returns a iso-8601 formatted date (e.g. 2010-03-19T08:46:23+0100). */
+char *
+iso8601(date)
+time_t date;
+{
+	return get_formatted_time(date, "%Y-%m-%dT%H:%M:%S%z");
+}
+
+
 struct stat buf, hbuf;
 
 gethdate(name) char *name; {
