@@ -636,6 +636,10 @@ do_genocide()
 #ifdef KAA
 	else if (*buf==u.usym) rehumanize();
 #endif
+#ifdef LIVELOGFILE
+	livelog_genocide(buf, FALSE);
+#endif
+
 }
 
 do_mapping()
