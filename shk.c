@@ -154,6 +154,12 @@ register roomno = inroom(u.ux,u.uy);
 			pline("You stole for a total worth of %ld zorkmids.",
 				total);
 			ESHK(shopkeeper)->robbed += total;
+#ifdef LIVELOGFILE
+			livelog_shoplifting(shkname(shopkeeper),
+					shopnam[rooms[ESHK(shopkeeper)->shoproom].rtype - 8],
+					total);
+#endif
+
 #ifdef KOPS
 			/* Keystone Kops srt@ucla */
 			pline("An alarm sounds throughout the dungeon!");
