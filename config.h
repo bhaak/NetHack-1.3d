@@ -57,6 +57,9 @@
 #define LIVELOG_SHOUT			/* Shoutting into the live game logfile */
 #define LIVELOG_BONES_KILLER		/* Reporting killing of uniques and ghosts of former players */
 
+/*#define SIMPLE_MAIL */	/* simple mail dgamelaunch support */$
+
+
 #ifdef UNIX
 #define	HLOCK	"perm"	/* an empty file used for locking purposes */
 #define LLOCK	"safelock"	/* link to previous */
