@@ -113,6 +113,9 @@ char *str;
 {
 	if(panicking++) abort();    /* avoid loops - this should never happen*/
 				    /* was exit(1) */
+#ifdef LIVELOGFILE
+	livelog_game_action("panicked");
+#endif
 	home(); cls();
 	puts(" Suddenly, the dungeon collapses.");
 	fputs(" ERROR:  ", stdout);

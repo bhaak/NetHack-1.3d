@@ -1026,6 +1026,9 @@ makewish()	/* Separated as there are now 3 places you can wish at. */
    if successful. */
 	if (otmp) { 
 #endif
+#ifdef LIVELOGFILE
+		livelog_wish(buf);
+#endif
 		wishquan = otmp->quan;
 		otmp = addinv(otmp);
 		/* indented lines added below so quantity shows

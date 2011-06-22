@@ -237,11 +237,17 @@ char *argv[];
 		(void) fflush(stdout);
 		if(!dorecover(fd))
 			goto not_recovered;
-		pline("Hello %s, welcome to %s!", plname, gamename);
+		pline("Hello %s, welcome back to %s!", plname, gamename);
 		flags.move = 0;
+#ifdef LIVELOGFILE
+		livelog_game_started("resumed", pl_character);
+#endif
 	} else {
 not_recovered:
 		newgame();
+#ifdef LIVELOGFILE
+		livelog_game_started("started", pl_character);
+#endif
 		/* give welcome message before pickup messages */
 		pline("Hello %s, welcome to %s!", plname, gamename);
 

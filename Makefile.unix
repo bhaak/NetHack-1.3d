@@ -25,7 +25,7 @@ LFLAGS = -X
 
 HACKCSRC = alloc.c apply.c bones.c cmd.c decl.c do.c do_name.c do_wear.c\
 	dog.c dogmove.c dothrow.c dump.c eat.c end.c engrave.c fight.c fountain.c\
-	hack.c invent.c ioctl.c lev.c main.c makemon.c mhitu.c\
+	hack.c invent.c ioctl.c lev.c livelog.c main.c makemon.c mhitu.c\
 	mklev.c mkmaze.c mkobj.c mkshop.c mon.c monmove.c monst.c o_init.c\
 	objnam.c options.c pager.c polyself.c potion.c pray.c pri.c\
 	prisym.c read.c rip.c rnd.c rumors.c save.c search.c shk.c shknam.c\
@@ -49,7 +49,7 @@ DISTR = $(SOURCES) $(AUX) $(VARAUX) README.OLD README\
 
 HOBJ = alloc.o apply.o bones.o cmd.o decl.o do.o do_name.o do_wear.o\
 	dog.o dogmove.o dothrow.o dump.o eat.o end.o engrave.o fight.o fountain.o\
-	hack.o invent.o ioctl.o lev.o main.o makemon.o mhitu.o\
+	hack.o invent.o ioctl.o lev.o livelog.o main.o makemon.o mhitu.o\
 	mklev.o mkmaze.o mkobj.o mkshop.o mon.o monmove.o monst.o o_init.o\
 	objnam.o options.o pager.o polyself.o potion.o pray.o pri.o\
 	prisym.o read.o rip.o rnd.o rumors.o save.o search.o shk.o shknam.o\
@@ -144,7 +144,7 @@ install: $(VARAUX)
 	sed "/^HACKDIR/c\HACKDIR=$(GAMEDIR)" <$(GAME).sh >$(SHELLDIR)/$(GAME)
 	cp $(GAME) $(GAMEDIR)/$(GAME)
 	touch $(GAMEDIR)/perm
-	chown $(GAMEUID) $(SHELLDIR)/$(GAME) $(GAMEDIR) $(GAMEDIR)/*
+	chmod $(GAMEUID) $(SHELLDIR)/$(GAME) $(GAMEDIR) $(GAMEDIR)/*
 	chgrp $(GAMEGRP) $(SHELLDIR)/$(GAME) $(GAMEDIR) $(GAMEDIR)/*
 	chmod 0755 $(SHELLDIR)/$(GAME)
 	chmod 04755 $(GAMEDIR)/$(GAME)
@@ -211,6 +211,7 @@ fountain.o:  hack.h
 invent.o:  hack.h wseg.h
 ioctl.o:  config.h
 lev.o:  hack.h mkroom.h wseg.h
+livelog.o:  hack.h
 makemon.o:  hack.h
 mhitu.o:  hack.h
 mklev.o:  hack.h mkroom.h

@@ -22,6 +22,9 @@ dosave(){
 	clear_screen();
 	fflush(stdout);
 	if(dosave0(0)) {
+#ifdef LIVELOGFILE
+		livelog_game_action("saved");
+#endif
 		settty("Be seeing you ...\n");
 		exit(0);
 	}
