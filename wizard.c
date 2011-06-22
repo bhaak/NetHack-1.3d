@@ -457,6 +457,7 @@ register struct monst	*mtmp;
 	if(! u.udemigod)  {
 
 		u.udemigod = TRUE;
+		u.uevent.udemigod = TRUE;
 		u.udg_cnt = rn1(250, 50);
 
 	/*  Make the wizard meaner the next time he appears  */

@@ -272,6 +272,10 @@ got_suffix:
 	u.ublessed = 0;				/* not worthy yet */
 	u.ugangr   = 0;				/* gods not angry */
 #endif
+
+	u.uevent.gehennom_entered = 0;
+	u.uevent.udemigod = 0;
+	u.uevent.ascended = 0;
 	u.uevent.uhand_of_elbereth = 0;
 
 	(void) time(&u.ubirthday);
