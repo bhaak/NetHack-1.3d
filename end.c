@@ -356,6 +356,8 @@ die:
 			printf("%s\n", pbuf);
 		dump("", pbuf);
 	}
+	dump("killer: ", killer);
+	dump("", "");
 	sprintf(pbuf, "You were level %u with a maximum of %d hit points when you %s.",
 			u.ulevel, u.uhpmax, st1);
 	if(!done_stopprint)
@@ -366,7 +368,7 @@ die:
 		cls();
 	}
 #ifdef WIZARD
-	if(!wizard)
+	//if(!wizard)
 #endif
 		topten();
 	if(done_stopprint) printf("\n\n");
