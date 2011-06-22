@@ -7,6 +7,8 @@
 
 extern char plname[], pl_character[];
 
+void livelog_generic(const char* field, const char* text);
+
 /* Keep the last xlog "achieve" value to be able to compare */
 long last_achieve_int;
 
@@ -92,20 +94,20 @@ char *item;
 /* Shout */
 #ifdef LIVELOG_SHOUT
 
-int 
+int
 doshout()
 {
-	char buf[BUFSZ], qbuf[QBUFSZ];
+	char buf[BUFSZ];
 	char* p;
 	
-	Sprintf(qbuf,"Shout what?");
-	getlin(qbuf, buf);
+	pline("Shout what? ");
+	getlin(buf);
 	
 	if (strlen(buf) == 0) {
-		Strcpy(buf, "*@&%!!");
-		You("shout profanities into the void!");
+		strcpy(buf, "*@&%!!");
+		pline("You shout profanities into the void!");
 	} else {
-		You("shout into the void: %s", buf);
+		pline("You shout into the void: %s", buf);
 	}
 
 	/* filter livelog delimiter */

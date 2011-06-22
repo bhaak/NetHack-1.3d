@@ -54,7 +54,7 @@
 #define DUMP_FN "/tmp/oldhack/%n.nh"	/* Fixed dumpfile name */
 
 #define LIVELOGFILE	"livelog"	/* Live game progress logfile */
-//#define LIVELOG_SHOUT			/* Shoutting into the live game logfile */
+#define LIVELOG_SHOUT			/* Shoutting into the live game logfile */
 //#define LIVELOG_BONES_KILLER		/* Reporting killing of uniques and ghosts of former players */
 
 #ifdef UNIX

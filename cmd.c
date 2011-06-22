@@ -30,6 +30,9 @@ int doremove(), dobreathe();
 int dowipe();
 # endif
 #endif
+#ifdef LIVELOG_SHOUT
+extern int doshout(); /**/
+#endif
 
 int rndobjsym(), rndmonsym();
 char *hcolor(), *rndmonnam(), *defmonnam();
@@ -212,6 +215,9 @@ struct ext_func_tab extcmdlist[] = {
 #endif
 #ifdef NEWCLASS
 	"sit", "sit down", dosit,
+#endif
+#ifdef LIVELOG_SHOUT
+	"shout", "shout something", doshout,
 #endif
 #if defined(KOPS) && defined(KAA)
 	"wipe", "wipe your face off", dowipe,
