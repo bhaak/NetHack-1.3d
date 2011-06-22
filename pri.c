@@ -13,7 +13,7 @@ extern char *CD;
 
 swallowed()
 {
-	char *ulook = "|@|";
+	char ulook[] = "|@|";
 	ulook[1] = u.usym;
 
 	cls();
