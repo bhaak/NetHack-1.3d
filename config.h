@@ -55,7 +55,7 @@
 
 #define LIVELOGFILE	"livelog"	/* Live game progress logfile */
 #define LIVELOG_SHOUT			/* Shoutting into the live game logfile */
-//#define LIVELOG_BONES_KILLER		/* Reporting killing of uniques and ghosts of former players */
+#define LIVELOG_BONES_KILLER		/* Reporting killing of uniques and ghosts of former players */
 
 #ifdef UNIX
 #define	HLOCK	"perm"	/* an empty file used for locking purposes */

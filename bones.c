@@ -14,6 +14,8 @@ char bones[FILENAME];
 char bones[] = "bones_xx";
 #endif
 
+extern char pl_character[];
+
 /* save bones and possessions of a deceased adventurer */
 savebones(){
 register fd;
@@ -66,6 +68,9 @@ register struct monst *mtmp;
 		otmp = otmp2;
 	}
 	if(!(mtmp = makemon(PM_GHOST, u.ux, u.uy))) return;
+#ifdef LIVELOG_BONES_KILLER
+	strcpy(mtmp->former_rank, pl_character);
+#endif
 	mtmp->mx = u.ux;
 	mtmp->my = u.uy;
 	mtmp->msleep = 1;

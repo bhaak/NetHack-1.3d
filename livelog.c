@@ -140,12 +140,13 @@ struct monst *mtmp;
 				mtmp->former_rank,
 				mtmp->data->mname);
 		livelog_write_string(strbuf);
-	} else if (mtmp->data->geno & G_UNIQ) {
-		char *n = noit_mon_nam(mtmp);
+	} else if (mtmp->data->mlet == '1') {
+		/* the wizard is the only unique monster in 1.3d */
+		char *n = "Wizard of Yendor";
 		/* $player killed a uniq monster */
 		livelog_generic("killed_uniq", n);
 	} else if (mtmp->isshk) {
-		char *n = noit_mon_nam(mtmp);
+		char *n = monnam(mtmp);
 		/* $player killed a shopkeeper */
 		livelog_generic("killed_shopkeeper", n);
 	}

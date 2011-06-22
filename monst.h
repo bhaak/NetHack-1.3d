@@ -43,6 +43,11 @@ struct monst {
 	long mlstmv;		/* prevent two moves at once */
 	struct obj *minvent;
 	long mgold;
+
+#ifdef LIVELOG_BONES_KILLER
+	char former_rank[25];	/* for bones' ghost rank in the former life */
+#endif
+
 	unsigned mxlth;		/* length of following data */
 	/* in order to prevent alignment problems mextra should
 	   be (or follow) a long int */

@@ -350,6 +350,10 @@ register struct monst *mtmp;
 	if(mtmp->data->mlet == '1') wizdead(mtmp);
 #endif
 	monfree(mtmp);
+
+#ifdef LIVELOG_BONES_KILLER
+	livelog_bones_killed(mtmp);
+#endif
 }
 
 /* called when monster is moved to larger structure */
