@@ -1,7 +1,17 @@
 /*	SCCS Id: @(#)rnd.c	1.3	87/07/14
 /* rnd.c - version 1.0.2 */
 
-#define RND(x)	((rand()>>3) % x)
+static
+int RND(int x)
+{
+	/* don't crash when RND(0) is called */
+	if (x == 0) {
+		return 0;
+	} else {
+		return ((rand()>>3) % x);
+	}
+
+}
 
 rn1(x,y)	/* y <= rn1(x,y) < (y+x) */ 
 register x,y;
