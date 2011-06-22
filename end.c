@@ -332,7 +332,7 @@ die:
 				}
 			}
 		}
-		if(worthlessct)
+		if(worthlessct) {
 #ifndef DGKMOD
 		sprintf(pbuf, "\t%u worthless piece%s of coloured glass,",
 			worthlessct, plur(worthlessct));
@@ -343,6 +343,7 @@ die:
 		if(!done_stopprint)
 			printf("%s\n", pbuf);
 		dump("", pbuf);
+		}
 		if(has_amulet) u.urexp *= 2;
 	} else {
 		sprintf(pbuf, "You %s on dungeon level %d with %ld points,",
