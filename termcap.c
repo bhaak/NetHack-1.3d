@@ -287,6 +287,8 @@ static short tmspc10[] = {		/* from termcap */
 
 delay_output() {
 	/* delay 50 ms - could also use a 'nap'-system call */
+	usleep(50);
+#if 0
 	/* BUG: if the padding character is visible, as it is on the 5620
 	   then this looks terrible. */
 #ifdef MSDOS
@@ -315,6 +317,7 @@ delay_output() {
 		}
 	}
 #endif /* MSDOS /**/
+#endif
 }
 
 cl_eos()			/* free after Robert Viduya */
