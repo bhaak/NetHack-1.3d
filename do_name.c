@@ -225,6 +225,11 @@ char *
 xmonnam(mtmp, vb) register struct monst *mtmp; int vb; {
 static char buf[BUFSZ];		/* %% */
 extern char *shkname();
+	if (!mtmp) {
+		(void) strcpy(buf, "the monster");
+		return(buf);
+	}
+
 	if(mtmp->mnamelth && !vb) {
 		(void) strcpy(buf, NAME(mtmp));
 		return(buf);
