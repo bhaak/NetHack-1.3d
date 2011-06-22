@@ -239,6 +239,8 @@ register boolean at_stairs;
 		(void) close(fd);
 	}
 
+	if (Inhell) u.uevent.gehennom_entered = TRUE;
+
 	if(at_stairs) {
 	    if(up) {
 		u.ux = xdnstair;
