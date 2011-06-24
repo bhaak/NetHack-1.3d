@@ -39,7 +39,7 @@
 #define	NOWAITINCLUDE
 #endif
 
-#define WIZARD  "mike"	/* the person allowed to use the -D option */
+#define WIZARD  "wizard"	/* the person allowed to use the -D option */
 #define RECORD	"record"/* the file containing the list of topscorers */
 #define XLOGFILE "xlogfile" /* even larger logfile */
 #define	NEWS	"news"	/* the file containing the latest hack news */
