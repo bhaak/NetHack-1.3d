@@ -57,7 +57,7 @@
 #define LIVELOG_SHOUT			/* Shoutting into the live game logfile */
 #define LIVELOG_BONES_KILLER		/* Reporting killing of uniques and ghosts of former players */
 
-/*#define SIMPLE_MAIL */	/* simple mail dgamelaunch support */$
+/*#define SIMPLE_MAIL */	/* simple mail dgamelaunch support */
 
 
 #ifdef UNIX
