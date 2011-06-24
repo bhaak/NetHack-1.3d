@@ -52,6 +52,8 @@
 #define DUMP_LOG	/* Dumping character stats */
 #define DUMP_TEXT_LOG 	/* Dump a text file */
 #define DUMP_FN "/tmp/oldhack/%n.nh"	/* Fixed dumpfile name */
+#define DUMPMSGS 30	/* Number of latest messages in the dump file  */
+
 
 #define LIVELOGFILE	"livelog"	/* Live game progress logfile */
 #define LIVELOG_SHOUT			/* Shoutting into the live game logfile */

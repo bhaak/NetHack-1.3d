@@ -6,6 +6,13 @@
 #include "hack.h"
 extern char *eos();
 extern int CO;
+extern int done_gameover;
+
+#if defined(DUMP_LOG) && defined(DUMPMSGS)
+char msgs[DUMPMSGS][BUFSZ];
+int msgs_count[DUMPMSGS];
+int lastmsg = -1;
+#endif
 
 char toplines[BUFSZ];
 xchar tlx, tly;			/* set by pline; used by addtopl */
@@ -130,6 +137,19 @@ register char *line,*arg1,*arg2,*arg3,*arg4,*arg5,*arg6,*arg7,*arg8,*arg9;
 	(void) sprintf(pbuf,line,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9);
 	if(flags.toplin == 1 && !strcmp(pbuf, toplines)) return;
 	nscr();		/* %% */
+
+#if defined(DUMP_LOG) && defined(DUMPMSGS)
+	if (DUMPMSGS > 0 && !done_gameover) {
+		/* count identical messages */
+		if (!strncmp(msgs[lastmsg], pbuf, BUFSZ)) {
+			msgs_count[lastmsg] += 1;
+		} else {
+			lastmsg = (lastmsg + 1) % DUMPMSGS;
+			strncpy(msgs[lastmsg], pbuf, BUFSZ);
+			msgs_count[lastmsg] = 1;
+		}
+	}
+#endif
 
 	/* If there is room on the line, print message on same line */
 	/* But messages like "You die..." deserve their own line */

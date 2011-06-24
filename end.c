@@ -10,9 +10,16 @@ extern char plname[], pl_character[];
 extern char dump_fn[];
 extern char oldbot[];
 
+#if defined(DUMP_LOG) && defined(DUMPMSGS)
+extern char msgs[DUMPMSGS][BUFSZ];
+extern int msgs_count[DUMPMSGS];
+extern int lastmsg;
+#endif
+
 xchar maxdlevel = 1;
 int done_stopprint;
 int done_hup;
+int done_gameover = FALSE;
 
 #ifdef DUMP_LOG
 /* Take a screen dump */
@@ -159,6 +166,7 @@ register char *st1;
 	}
 #endif /* WIZARD /**/
 die:
+	done_gameover = TRUE;
 	(void) signal(SIGINT, done_intr);
 #ifdef UNIX
 	(void) signal(SIGQUIT, done_intr);
@@ -193,7 +201,7 @@ die:
 	  dump_screen();
 	  dump_inventory();
 	}
-# ifdef DUMPMSGS // TODO
+# ifdef DUMPMSGS
 	if (lastmsg >= 0) {
 		char tmpbuf[BUFSZ];
 		int i,j;
