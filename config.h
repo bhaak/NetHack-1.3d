@@ -86,7 +86,7 @@
 #define	MAILCKFREQ	1
 
 
-#define SHELL		/* do not delete the '!' command */
+/* #define SHELL */		/* do not delete the '!' command */
 
 #ifdef BSD
 #define	SUSPEND		/* let ^Z suspend the game */
