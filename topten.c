@@ -110,7 +110,9 @@ struct toptenentry *tt;
                 tt->deathdate, tt->birthdate, tt->uid);
 
   (void)fprintf(rfile,
+                SEP "role=%c%c%c"
                 SEP "gender=%s",
+                pl_character[0], pl_character[1], pl_character[2],
                 (tt->sex == 'F') ? "Fem" : "Mal");
 
    munge_xlstring(buf, plname, DTHSZ + 1);
