@@ -261,7 +261,11 @@ got_suffix:
 	(void) strncpy(pl_character, roles[i], PL_CSIZ-1);
 	pl_character[PL_CSIZ-1] = 0;
 	flags.beginner = 1;
-	u = zerou;
+
+	/* zero u, including pointer values --
+	 * necessary when aborting from a failed restore */
+	(void) memset((void *)&u, 0, sizeof(u));
+
 	u.usym = '@';
 	u.ulevel = 1;
 #ifdef SPELLS
