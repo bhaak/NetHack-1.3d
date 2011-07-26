@@ -557,10 +557,16 @@ struct obj *obj;			/* 2nd arg to fhitm/fhito */
 		/* modified by GAN to hit all objects */
 		if(fhito && o_at(bhitpos.x,bhitpos.y)){
 			int hitanything = 0;
-			for(otmp = fobj; otmp; otmp = otmp->nobj)
-				if(otmp->ox == bhitpos.x &&
-				   otmp->oy == bhitpos.y)
+			otmp = fobj;
+			/* Fix for polymorph bug, Tim Wright */
+			while(otmp) { /* was a "for" loop.  */
+				register struct obj *next_obj;
+
+				next_obj = otmp->nobj;
+				if(otmp->ox == bhitpos.x && otmp->oy == bhitpos.y)
 					hitanything += (*fhito)(otmp, obj);
+				otmp = next_obj;
+			}
 			if(hitanything)	range--;
 		}
 		if(!ZAP_POS(typ)) {
