@@ -68,7 +68,9 @@ register struct permonst *ptr;
 			if(index(fut_geno, ptr->mlet)) continue;
 			if(tmp-- <= 0) goto gotmon;
 		}
-		panic("makemon?");
+		/* this can happen if you are deep in the dungeon and 
+		   mostly weak monsters have been genocided. */
+		return((struct monst *) 0);
 	}
 gotmon:
 	mtmp = newmonst(ptr->pxlth);
