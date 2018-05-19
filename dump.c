@@ -36,28 +36,92 @@ char html_dump_path[BUFSIZ];
  * - started/ended date at the top
  */
 
+#define Sprintf sprintf
 static
 char*
 get_dump_filename()
 {
-  int new_dump_fn_len = strlen(dump_fn)+strlen(plname)+5; /* space for ".html" */
-  char *new_dump_fn = (char *) alloc((unsigned)(new_dump_fn_len+1));
-  char rplname[BUFSZ];
-  /* backwards compatibility, replace %n with %s */
-  char *p = (char *) strstr(dump_fn, "%n");
-  if (p) { *(p+1) = 's'; }
+    char *buf = (char *) alloc((unsigned)(BUFSIZ+1));
+    long ubirthday = u.ubirthday;
+    const char *fp = dump_fn;
+    char *bp = buf;
+    int slen, len = 0;
+    char tmpbuf[BUFSZ];
+    char verbuf[BUFSZ];
+    long uid;
+    time_t now;
 
-  p = (char *) strstr(dump_fn, "%s");
+    now = time(NULL);
+    uid = (long) getuid();
 
-  if (p) {
-    /* replace %s with player name */
-    strcpy(rplname, plname);
-    regularize(rplname);
-    sprintf(new_dump_fn, dump_fn, plname);
-  } else {
-    strcpy(new_dump_fn, dump_fn);
-  }
-  return new_dump_fn;
+    /*
+     * Note: %t and %T assume that time_t is a 'long int' number of
+     * seconds since some epoch value.  That's quite iffy....  The
+     * unit of time might be different and the datum size might be
+     * some variant of 'long long int'.  [Their main purpose is to
+     * construct a unique file name rather than record the date and
+     * time; violating the 'long seconds since base-date' assumption
+     * may or may not interfere with that usage.]
+     */
+
+    while (fp && *fp && len < BUFSZ-1) {
+        if (*fp == '%') {
+            fp++;
+            switch (*fp) {
+            default:
+                goto finish;
+            case '\0': /* fallthrough */
+            case '%':  /* literal % */
+                Sprintf(tmpbuf, "%%");
+                break;
+            case 't': /* game start, timestamp */
+                Sprintf(tmpbuf, "%lu", (unsigned long) ubirthday);
+                break;
+            case 'T': /* current time, timestamp */
+                Sprintf(tmpbuf, "%lu", (unsigned long) now);
+                break;
+            case 'd': /* game start, YYYYMMDDhhmmss */
+                Sprintf(tmpbuf, "%08ld%06ld",
+                        yyyymmdd(ubirthday), hhmmss(ubirthday));
+                break;
+            case 'D': /* current time, YYYYMMDDhhmmss */
+                Sprintf(tmpbuf, "%08ld%06ld", yyyymmdd(now), hhmmss(now));
+                break;
+#if 0
+            case 'v': /* version, eg. "3.6.2-0" */
+                Sprintf(tmpbuf, "%s", version_string(verbuf));
+                break;
+#endif
+            case 'u': /* UID */
+                Sprintf(tmpbuf, "%ld", uid);
+                break;
+            case 'n': /* player name */
+            case 's': /* player name */
+                Sprintf(tmpbuf, "%s", *plname ? plname : "unknown");
+                break;
+            case 'N': /* first character of player name */
+                Sprintf(tmpbuf, "%c", *plname ? *plname : 'u');
+                break;
+            }
+
+            slen = strlen(tmpbuf);
+            if (len + slen < BUFSZ-1) {
+                len += slen;
+                Sprintf(bp, "%s", tmpbuf);
+                bp += slen;
+                if (*fp) fp++;
+            } else
+                break;
+        } else {
+            *bp = *fp;
+            bp++;
+            fp++;
+            len++;
+        }
+    }
+ finish:
+    *bp = '\0';
+    return buf;
 }
 
 void
