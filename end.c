@@ -280,9 +280,9 @@ die:
 		keepdogs();
 		mtmp = mydogs;
 		if(mtmp) {
-			sprintf(pbuf, "You");
+			strcpy(pbuf, "You");
 			while(mtmp) {
-				sprintf(eos(pbuf), " and %s", monnam(mtmp));
+				sprintf(pbuf+strlen(pbuf), " and %s", monnam(mtmp));
 				if(mtmp->mtame)
 					u.urexp += mtmp->mhp;
 				mtmp = mtmp->nmon;
