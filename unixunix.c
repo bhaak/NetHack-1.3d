@@ -89,6 +89,22 @@ time_t date;
 	return datenum;
 }
 
+long
+hhmmss(date)
+time_t date;
+{
+    long timenum;
+    struct tm *lt;
+
+    if (date == 0)
+        lt = getlt();
+    else
+        lt = localtime((time_t) &date);
+
+    timenum = lt->tm_hour * 10000L + lt->tm_min * 100L + lt->tm_sec;
+    return timenum;
+}
+
 phase_of_the_moon()			/* 0-7, with 0: new, 4: full */
 {					/* moon period: 29.5306 days */
 					/* year: 365.2422 days */
