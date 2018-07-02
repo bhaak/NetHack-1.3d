@@ -137,7 +137,7 @@ pleased() {
 			break;
 
 	    case 6:	pline ("An object appears at your feet!");
-			mkobj_at("+", u.ux, u.uy);
+			mkobj_at('+', u.ux, u.uy);
 			break;
 
 	    case 7:	pline("A voice booms out:  We crown thee...");
