@@ -408,7 +408,7 @@ postmov:
 			mksobj_at(ROCK, mtmp->mx, mtmp->my);
 		   }
 		  if(cansee(mtmp->mx, mtmp->my))
-		    atl(mtmp->mx,mtmp->my,fobj->olet);
+		    if(fobj)	atl(mtmp->mx,mtmp->my,fobj->olet);
 	       }
 	       /* Maybe a rock mole just ate some gold or armor? */
 	       if(msym == 'r') meatgold(mtmp);
