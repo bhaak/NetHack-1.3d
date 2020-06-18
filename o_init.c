@@ -32,11 +32,9 @@ register char let, *tmp;
 	/* init base; if probs given check that they add up to 100, 
 	   otherwise compute probs; shuffle descriptions */
 	end = SIZE(objects);
-#ifdef MSDOS
 	/* Assign indices to all oc_descr_i first */
 	for (i = 0; i < end; i++)
 		objects[i].oc_descr_i = i;
-#endif
 	first = 0;
 	while( first < end ) {
 		let = objects[first].oc_olet;
@@ -70,12 +68,10 @@ register char let, *tmp;
 				tmp = objects[j].oc_descr;
 				objects[j].oc_descr = objects[i].oc_descr;
 				objects[i].oc_descr = tmp;
-#ifdef MSDOS
 	/* keep track of where the description came from */
 				tmp_i = objects[j].oc_descr_i;
 				objects[j].oc_descr_i = objects[i].oc_descr_i;
 				objects[i].oc_descr_i = tmp_i;
-#endif
 			}
 		}
 		first = last;
@@ -137,7 +133,7 @@ unsigned len;
 restnames(fd) register fd; {
 register int i;
 unsigned len;
-	char *oc_descr[NROFOBJECTS + 1], *oc_name;
+	char *oc_descr[NROFOBJECTS + 2], *oc_name;
 
 	mread(fd, (char *) bases, sizeof bases);
 
