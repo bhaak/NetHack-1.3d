@@ -137,7 +137,6 @@ unsigned len;
 restnames(fd) register fd; {
 register int i;
 unsigned len;
-#ifdef MSDOS
 	char *oc_descr[NROFOBJECTS + 1], *oc_name;
 
 	mread(fd, (char *) bases, sizeof bases);
@@ -155,14 +154,13 @@ unsigned len;
 	/* Convert from saved indices into pointers */
 	for (i = 0; i < SIZE(objects); i++)
 		objects[i].oc_descr = oc_descr[objects[i].oc_descr_i];
-#else
-	mread(fd, (char *) bases, sizeof bases);
-	mread(fd, (char *) objects, sizeof objects);
-#endif
-	for(i=0; i < SIZE(objects); i++) if(objects[i].oc_uname) {
-		mread(fd, (char *) &len, sizeof len);
-		objects[i].oc_uname = (char *) alloc(len);
-		mread(fd, objects[i].oc_uname, len);
+
+	for (i=0; i < SIZE(objects); i++) {
+		if (objects[i].oc_uname) {
+			mread(fd, (char *) &len, sizeof len);
+			objects[i].oc_uname = (char *) alloc(len);
+			mread(fd, objects[i].oc_uname, len);
+		}
 	}
 }
 

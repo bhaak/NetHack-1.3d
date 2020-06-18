@@ -32,9 +32,7 @@ struct objclass {
 #define	wldam		oc_oc2	/* for weapons and PICK_AXE */
 
 #define	g_val		oc_oi	/* for gems: value on exit */
-#ifdef MSDOS
 	int oc_descr_i;		/* where the description comes from */
-#endif
 #ifdef SPELLS
 #define spl_lev		oc_oi	/* for books: spell level */
 #endif
