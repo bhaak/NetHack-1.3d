@@ -5,6 +5,7 @@
 #include "hack.h"
 
 #ifdef NEWCLASS
+struct permonst * courtmon();
 int	identify();
 
 dosit() {
