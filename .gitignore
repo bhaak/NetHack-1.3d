@@ -1,0 +1,12 @@
+*.swp
+*.o
+data
+date.h
+main.c
+makedefs
+nethack
+onames.h
+rumors
+tty.c
+unix.c
+.hg
