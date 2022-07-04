@@ -217,7 +217,12 @@ register fd;
 	mread(fd, (char *) genocided, sizeof genocided);
 	mread(fd, (char *) fut_geno, sizeof fut_geno);
 #ifdef HARD
+	{
+	/* Save name pointer from being munged -- tom@uw-warp */
+	char *name = pm_wizard.mname;
 	mread(fd, (char *) &pm_wizard, sizeof(struct permonst));
+	pm_wizard.mname = name;
+	}
 #endif
 	restnames(fd);
 #ifdef DGK
