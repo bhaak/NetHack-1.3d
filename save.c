@@ -11,6 +11,7 @@
 extern char genocided[60];		/* defined in Decl.c */
 extern char fut_geno[60];		/* idem */
 extern struct permonst	pm_wizard;	/* since the wizard evolves */
+extern int something_worth_saving;
 
 extern char SAVEF[], nul[];
 extern char pl_character[PL_CSIZ];
@@ -35,7 +36,9 @@ dosave(){
 
 #ifndef NOSAVEONHANGUP
 hangup(){
-	(void) dosave0(1);
+	if (something_worth_saving) {
+		(void) dosave0(1);
+	}
 	exit(1);
 }
 #endif

@@ -17,6 +17,7 @@
 
 extern char *getlogin(), *getenv();
 extern char plname[PL_NSIZ], pl_character[PL_CSIZ];
+extern int something_worth_saving;
 
 int (*afternmv)();
 int (*occupation)();
@@ -256,6 +257,7 @@ not_recovered:
 		flags.move = 1;
 	}
 
+	something_worth_saving++;
 	flags.moonphase = phase_of_the_moon();
 	if(flags.moonphase == FULL_MOON) {
 		pline("You are lucky! Full moon tonight.");

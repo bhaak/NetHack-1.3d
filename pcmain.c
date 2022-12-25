@@ -18,6 +18,7 @@ extern struct permonst mons[CMNUM+2];
 extern char genocided[], fut_geno[];
 extern char *getlogin(), *getenv();
 extern char plname[PL_NSIZ], pl_character[PL_CSIZ];
+extern int something_worth_saving;
 
 int (*afternmv)(), done1(), (*occupation)();
 
@@ -264,6 +265,7 @@ not_recovered:
 
 	initrack();
 	(void) signal(SIGINT, SIG_IGN);
+	something_worth_saving++;
 #ifdef MSDOS
 	/* Help for Microsoft optimizer.  Otherwise main is too large -dgk*/
 	moveloop();

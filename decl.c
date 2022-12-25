@@ -57,6 +57,8 @@ int	occtime;
 int	in_doagain;
 #endif
 
+int something_worth_saving = 0;
+
 char *HI, *HE;		/* set up in termcap.c */
 
 char genocided[60];
